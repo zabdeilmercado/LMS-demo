@@ -176,309 +176,322 @@ export default function NotificationsPage() {
                     Notification Settings
                   </TabsTrigger>
                 </TabsList>
+
+                <div className="container mx-auto p-4 md:p-6">
+                  <TabsContent value="all" className="mt-0">
+                    <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <h1 className="text-2xl font-bold text-[#0B4619]">Notifications</h1>
+                        <p className="text-gray-600">Stay updated with important announcements and events</p>
+                      </div>
+                      <div className="flex flex-col gap-2 sm:flex-row">
+                        <div className="relative w-full sm:w-64">
+                          <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
+                          <Input
+                            type="text"
+                            placeholder="Search notifications..."
+                            className="pl-8"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                          />
+                        </div>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="outline" className="gap-2">
+                              <Filter className="h-4 w-4" />
+                              <span>{filter}</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => setFilter("All")}>All</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilter("Assignment")}>Assignments</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilter("Course")}>Courses</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilter("Grade")}>Grades</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilter("System")}>System</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilter("Calendar")}>Calendar</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilter("Group")}>Groups</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setFilter("Resource")}>Resources</DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    </div>
+
+                    <Card className="border shadow-sm">
+                      <CardContent className="p-0">
+                        <div className="divide-y">
+                          {filteredNotifications.length > 0 ? (
+                            filteredNotifications.map((notification) => (
+                              <div
+                                key={notification.id}
+                                className={`p-4 transition-colors hover:bg-gray-50 ${
+                                  !notification.read ? "bg-green-50" : ""
+                                }`}
+                              >
+                                <div className="flex gap-3">
+                                  {getNotificationIcon(notification.type)}
+                                  <div className="flex-1">
+                                    <div className="flex items-start justify-between">
+                                      <h3 className={`font-medium ${!notification.read ? "text-[#0B4619]" : ""}`}>
+                                        {notification.title}
+                                      </h3>
+                                      <div className="flex items-center gap-2">
+                                        <span className="text-xs text-gray-500">{notification.time}</span>
+                                        <DropdownMenu>
+                                          <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                                              <MoreHorizontal className="h-4 w-4" />
+                                            </Button>
+                                          </DropdownMenuTrigger>
+                                          <DropdownMenuContent align="end">
+                                            <DropdownMenuItem>Mark as read</DropdownMenuItem>
+                                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                                          </DropdownMenuContent>
+                                        </DropdownMenu>
+                                      </div>
+                                    </div>
+                                    <p className="text-sm text-gray-600">{notification.message}</p>
+                                    {notification.course && (
+                                      <div className="mt-1 flex items-center gap-1">
+                                        <BookOpen className="h-3 w-3 text-gray-500" />
+                                        <span className="text-xs text-gray-500">{notification.course}</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="flex h-32 items-center justify-center">
+                              <p className="text-gray-500">No notifications found</p>
+                            </div>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  <TabsContent value="unread" className="mt-0">
+                    <Card className="border shadow-sm">
+                      <CardHeader className="flex flex-row items-center justify-between pb-2">
+                        <CardTitle className="text-lg font-semibold">Unread Notifications</CardTitle>
+                        <Button variant="outline" size="sm">
+                          Mark all as read
+                        </Button>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="divide-y">
+                          {notifications.filter((n) => !n.read).length > 0 ? (
+                            notifications
+                              .filter((n) => !n.read)
+                              .map((notification) => (
+                                <div
+                                  key={notification.id}
+                                  className="bg-green-50 p-4 transition-colors hover:bg-green-100"
+                                >
+                                  <div className="flex gap-3">
+                                    {getNotificationIcon(notification.type)}
+                                    <div className="flex-1">
+                                      <div className="flex items-start justify-between">
+                                        <h3 className="font-medium text-[#0B4619]">{notification.title}</h3>
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-xs text-gray-500">{notification.time}</span>
+                                          <DropdownMenu>
+                                            <DropdownMenuTrigger asChild>
+                                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                                                <MoreHorizontal className="h-4 w-4" />
+                                              </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent align="end">
+                                              <DropdownMenuItem>Mark as read</DropdownMenuItem>
+                                              <DropdownMenuItem>Delete</DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                          </DropdownMenu>
+                                        </div>
+                                      </div>
+                                      <p className="text-sm text-gray-600">{notification.message}</p>
+                                      {notification.course && (
+                                        <div className="mt-1 flex items-center gap-1">
+                                          <BookOpen className="h-3 w-3 text-gray-500" />
+                                          <span className="text-xs text-gray-500">{notification.course}</span>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              ))
+                          ) : (
+                            <div className="flex h-32 items-center justify-center">
+                              <p className="text-gray-500">No unread notifications</p>
+                            </div>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  <TabsContent value="settings" className="mt-0">
+                    <Card className="border shadow-sm">
+                      <CardHeader>
+                        <CardTitle>Notification Settings</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-6">
+                          <div>
+                            <h3 className="mb-3 font-medium">Email Notifications</h3>
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <label htmlFor="email-assignments" className="flex items-center gap-2">
+                                  <Calendar className="h-4 w-4 text-amber-500" />
+                                  <span>Assignment Deadlines</span>
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  id="email-assignments"
+                                  className="h-4 w-4 rounded border-gray-300"
+                                  defaultChecked
+                                />
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <label htmlFor="email-grades" className="flex items-center gap-2">
+                                  <CheckCircle className="h-4 w-4 text-green-500" />
+                                  <span>Grade Updates</span>
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  id="email-grades"
+                                  className="h-4 w-4 rounded border-gray-300"
+                                  defaultChecked
+                                />
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <label htmlFor="email-announcements" className="flex items-center gap-2">
+                                  <Bell className="h-4 w-4 text-[#0B4619]" />
+                                  <span>Course Announcements</span>
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  id="email-announcements"
+                                  className="h-4 w-4 rounded border-gray-300"
+                                  defaultChecked
+                                />
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <label htmlFor="email-system" className="flex items-center gap-2">
+                                  <Settings className="h-4 w-4 text-purple-500" />
+                                  <span>System Updates</span>
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  id="email-system"
+                                  className="h-4 w-4 rounded border-gray-300"
+                                  defaultChecked
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div>
+                            <h3 className="mb-3 font-medium">Push Notifications</h3>
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <label htmlFor="push-assignments" className="flex items-center gap-2">
+                                  <Calendar className="h-4 w-4 text-amber-500" />
+                                  <span>Assignment Deadlines</span>
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  id="push-assignments"
+                                  className="h-4 w-4 rounded border-gray-300"
+                                  defaultChecked
+                                />
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <label htmlFor="push-grades" className="flex items-center gap-2">
+                                  <CheckCircle className="h-4 w-4 text-green-500" />
+                                  <span>Grade Updates</span>
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  id="push-grades"
+                                  className="h-4 w-4 rounded border-gray-300"
+                                  defaultChecked
+                                />
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <label htmlFor="push-announcements" className="flex items-center gap-2">
+                                  <Bell className="h-4 w-4 text-[#0B4619]" />
+                                  <span>Course Announcements</span>
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  id="push-announcements"
+                                  className="h-4 w-4 rounded border-gray-300"
+                                  defaultChecked
+                                />
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <label htmlFor="push-system" className="flex items-center gap-2">
+                                  <Settings className="h-4 w-4 text-purple-500" />
+                                  <span>System Updates</span>
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  id="push-system"
+                                  className="h-4 w-4 rounded border-gray-300"
+                                  defaultChecked
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div>
+                            <h3 className="mb-3 font-medium">Notification Frequency</h3>
+                            <div className="space-y-2">
+                              <div className="flex items-center">
+                                <input
+                                  type="radio"
+                                  id="freq-realtime"
+                                  name="frequency"
+                                  className="h-4 w-4 border-gray-300"
+                                  defaultChecked
+                                />
+                                <label htmlFor="freq-realtime" className="ml-2">
+                                  Real-time
+                                </label>
+                              </div>
+                              <div className="flex items-center">
+                                <input
+                                  type="radio"
+                                  id="freq-daily"
+                                  name="frequency"
+                                  className="h-4 w-4 border-gray-300"
+                                />
+                                <label htmlFor="freq-daily" className="ml-2">
+                                  Daily digest
+                                </label>
+                              </div>
+                              <div className="flex items-center">
+                                <input
+                                  type="radio"
+                                  id="freq-weekly"
+                                  name="frequency"
+                                  className="h-4 w-4 border-gray-300"
+                                />
+                                <label htmlFor="freq-weekly" className="ml-2">
+                                  Weekly digest
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+
+                          <Button className="bg-[#0B4619] hover:bg-[#0a3d16]">Save Settings</Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                </div>
               </Tabs>
             </div>
-          </div>
-
-          <div className="container mx-auto p-4 md:p-6">
-            <TabsContent value="all" className="mt-0">
-              <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <h1 className="text-2xl font-bold text-[#0B4619]">Notifications</h1>
-                  <p className="text-gray-600">Stay updated with important announcements and events</p>
-                </div>
-                <div className="flex flex-col gap-2 sm:flex-row">
-                  <div className="relative w-full sm:w-64">
-                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
-                    <Input
-                      type="text"
-                      placeholder="Search notifications..."
-                      className="pl-8"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline" className="gap-2">
-                        <Filter className="h-4 w-4" />
-                        <span>{filter}</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => setFilter("All")}>All</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setFilter("Assignment")}>Assignments</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setFilter("Course")}>Courses</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setFilter("Grade")}>Grades</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setFilter("System")}>System</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setFilter("Calendar")}>Calendar</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setFilter("Group")}>Groups</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setFilter("Resource")}>Resources</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              </div>
-
-              <Card className="border shadow-sm">
-                <CardContent className="p-0">
-                  <div className="divide-y">
-                    {filteredNotifications.length > 0 ? (
-                      filteredNotifications.map((notification) => (
-                        <div
-                          key={notification.id}
-                          className={`p-4 transition-colors hover:bg-gray-50 ${
-                            !notification.read ? "bg-green-50" : ""
-                          }`}
-                        >
-                          <div className="flex gap-3">
-                            {getNotificationIcon(notification.type)}
-                            <div className="flex-1">
-                              <div className="flex items-start justify-between">
-                                <h3 className={`font-medium ${!notification.read ? "text-[#0B4619]" : ""}`}>
-                                  {notification.title}
-                                </h3>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-xs text-gray-500">{notification.time}</span>
-                                  <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                                        <MoreHorizontal className="h-4 w-4" />
-                                      </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end">
-                                      <DropdownMenuItem>Mark as read</DropdownMenuItem>
-                                      <DropdownMenuItem>Delete</DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                  </DropdownMenu>
-                                </div>
-                              </div>
-                              <p className="text-sm text-gray-600">{notification.message}</p>
-                              {notification.course && (
-                                <div className="mt-1 flex items-center gap-1">
-                                  <BookOpen className="h-3 w-3 text-gray-500" />
-                                  <span className="text-xs text-gray-500">{notification.course}</span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="flex h-32 items-center justify-center">
-                        <p className="text-gray-500">No notifications found</p>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="unread" className="mt-0">
-              <Card className="border shadow-sm">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-lg font-semibold">Unread Notifications</CardTitle>
-                  <Button variant="outline" size="sm">
-                    Mark all as read
-                  </Button>
-                </CardHeader>
-                <CardContent className="p-0">
-                  <div className="divide-y">
-                    {notifications.filter((n) => !n.read).length > 0 ? (
-                      notifications
-                        .filter((n) => !n.read)
-                        .map((notification) => (
-                          <div key={notification.id} className="bg-green-50 p-4 transition-colors hover:bg-green-100">
-                            <div className="flex gap-3">
-                              {getNotificationIcon(notification.type)}
-                              <div className="flex-1">
-                                <div className="flex items-start justify-between">
-                                  <h3 className="font-medium text-[#0B4619]">{notification.title}</h3>
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-xs text-gray-500">{notification.time}</span>
-                                    <DropdownMenu>
-                                      <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                                          <MoreHorizontal className="h-4 w-4" />
-                                        </Button>
-                                      </DropdownMenuTrigger>
-                                      <DropdownMenuContent align="end">
-                                        <DropdownMenuItem>Mark as read</DropdownMenuItem>
-                                        <DropdownMenuItem>Delete</DropdownMenuItem>
-                                      </DropdownMenuContent>
-                                    </DropdownMenu>
-                                  </div>
-                                </div>
-                                <p className="text-sm text-gray-600">{notification.message}</p>
-                                {notification.course && (
-                                  <div className="mt-1 flex items-center gap-1">
-                                    <BookOpen className="h-3 w-3 text-gray-500" />
-                                    <span className="text-xs text-gray-500">{notification.course}</span>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        ))
-                    ) : (
-                      <div className="flex h-32 items-center justify-center">
-                        <p className="text-gray-500">No unread notifications</p>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="settings" className="mt-0">
-              <Card className="border shadow-sm">
-                <CardHeader>
-                  <CardTitle>Notification Settings</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="mb-3 font-medium">Email Notifications</h3>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <label htmlFor="email-assignments" className="flex items-center gap-2">
-                            <Calendar className="h-4 w-4 text-amber-500" />
-                            <span>Assignment Deadlines</span>
-                          </label>
-                          <input
-                            type="checkbox"
-                            id="email-assignments"
-                            className="h-4 w-4 rounded border-gray-300"
-                            defaultChecked
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <label htmlFor="email-grades" className="flex items-center gap-2">
-                            <CheckCircle className="h-4 w-4 text-green-500" />
-                            <span>Grade Updates</span>
-                          </label>
-                          <input
-                            type="checkbox"
-                            id="email-grades"
-                            className="h-4 w-4 rounded border-gray-300"
-                            defaultChecked
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <label htmlFor="email-announcements" className="flex items-center gap-2">
-                            <Bell className="h-4 w-4 text-[#0B4619]" />
-                            <span>Course Announcements</span>
-                          </label>
-                          <input
-                            type="checkbox"
-                            id="email-announcements"
-                            className="h-4 w-4 rounded border-gray-300"
-                            defaultChecked
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <label htmlFor="email-system" className="flex items-center gap-2">
-                            <Settings className="h-4 w-4 text-purple-500" />
-                            <span>System Updates</span>
-                          </label>
-                          <input
-                            type="checkbox"
-                            id="email-system"
-                            className="h-4 w-4 rounded border-gray-300"
-                            defaultChecked
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h3 className="mb-3 font-medium">Push Notifications</h3>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <label htmlFor="push-assignments" className="flex items-center gap-2">
-                            <Calendar className="h-4 w-4 text-amber-500" />
-                            <span>Assignment Deadlines</span>
-                          </label>
-                          <input
-                            type="checkbox"
-                            id="push-assignments"
-                            className="h-4 w-4 rounded border-gray-300"
-                            defaultChecked
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <label htmlFor="push-grades" className="flex items-center gap-2">
-                            <CheckCircle className="h-4 w-4 text-green-500" />
-                            <span>Grade Updates</span>
-                          </label>
-                          <input
-                            type="checkbox"
-                            id="push-grades"
-                            className="h-4 w-4 rounded border-gray-300"
-                            defaultChecked
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <label htmlFor="push-announcements" className="flex items-center gap-2">
-                            <Bell className="h-4 w-4 text-[#0B4619]" />
-                            <span>Course Announcements</span>
-                          </label>
-                          <input
-                            type="checkbox"
-                            id="push-announcements"
-                            className="h-4 w-4 rounded border-gray-300"
-                            defaultChecked
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <label htmlFor="push-system" className="flex items-center gap-2">
-                            <Settings className="h-4 w-4 text-purple-500" />
-                            <span>System Updates</span>
-                          </label>
-                          <input
-                            type="checkbox"
-                            id="push-system"
-                            className="h-4 w-4 rounded border-gray-300"
-                            defaultChecked
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h3 className="mb-3 font-medium">Notification Frequency</h3>
-                      <div className="space-y-2">
-                        <div className="flex items-center">
-                          <input
-                            type="radio"
-                            id="freq-realtime"
-                            name="frequency"
-                            className="h-4 w-4 border-gray-300"
-                            defaultChecked
-                          />
-                          <label htmlFor="freq-realtime" className="ml-2">
-                            Real-time
-                          </label>
-                        </div>
-                        <div className="flex items-center">
-                          <input type="radio" id="freq-daily" name="frequency" className="h-4 w-4 border-gray-300" />
-                          <label htmlFor="freq-daily" className="ml-2">
-                            Daily digest
-                          </label>
-                        </div>
-                        <div className="flex items-center">
-                          <input type="radio" id="freq-weekly" name="frequency" className="h-4 w-4 border-gray-300" />
-                          <label htmlFor="freq-weekly" className="ml-2">
-                            Weekly digest
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Button className="bg-[#0B4619] hover:bg-[#0a3d16]">Save Settings</Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
           </div>
         </main>
         <RightSidebar />
