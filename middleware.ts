@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
   // and redirect to login if needed
 
   // In a real app, you would check for a valid session cookie or token
-  const isAuthenticated = true // This would be your actual auth check
+  const isAuthenticated = false // This would be your actual auth check
 
   // Public paths that don't require authentication
   const publicPaths = ["/login", "/forgot-password", "/register"]

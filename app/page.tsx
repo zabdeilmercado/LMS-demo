@@ -9,7 +9,7 @@ export default function Home() {
 
   // This is just a placeholder for actual authentication logic
   // In a real app, you would check if the user is authenticated
-  const isAuthenticated = true
+  const isAuthenticated = false
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -17,5 +17,6 @@ export default function Home() {
     }
   }, [isAuthenticated, router])
 
-  return <LMSDashboard />
+  // Only render the dashboard if authenticated
+  return isAuthenticated ? <LMSDashboard /> : null
 }
