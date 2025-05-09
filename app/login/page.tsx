@@ -3,14 +3,15 @@
 import type React from "react"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -36,8 +37,14 @@ export default function LoginPage() {
       <div className="flex flex-1 items-center justify-center p-4">
         <div className="w-full max-w-md">
           <div className="mb-8 flex flex-col items-center text-center">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#0B4619] shadow-lg">
-              <span className="text-[#FFD700] text-3xl font-bold">CSU</span>
+            <div className="relative h-40 w-40">
+              <Image
+                src="/images/csu-logo.png"
+                alt="Caraga State University Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
             <h1 className="mt-4 text-2xl font-bold text-[#0B4619]">CARAGA STATE UNIVERSITY</h1>
             <p className="text-sm text-gray-600">Competence, Service, and Uprightness</p>
@@ -55,7 +62,7 @@ export default function LoginPage() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="student@csu.edu.ph"
+                    placeholder="student@carsu.edu.ph"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -127,15 +134,7 @@ export default function LoginPage() {
                 </Button>
               </form>
             </CardContent>
-            <CardFooter className="flex flex-col space-y-4">
-              <div className="relative flex items-center">
-                <div className="flex-grow border-t border-gray-300"></div>
-                <span className="mx-4 flex-shrink text-xs text-gray-500">OR</span>
-                <div className="flex-grow border-t border-gray-300"></div>
-              </div>
-              <Button variant="outline" className="w-full">
-                Sign in with Microsoft
-              </Button>
+            <CardFooter className="flex flex-col">
               <div className="text-center text-sm">
                 <span className="text-gray-600">Don't have an account? </span>
                 <Link href="/register" className="font-medium text-[#0B4619] hover:underline">

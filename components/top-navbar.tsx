@@ -18,8 +18,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 export function TopNavbar() {
+  const router = useRouter()
   const [unreadEmails, setUnreadEmails] = useState(3)
   const [unreadNotifications, setUnreadNotifications] = useState(5)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -183,8 +186,8 @@ export function TopNavbar() {
           {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
 
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FFD700] shadow-md">
-          <span className="text-[#0B4619] text-lg font-bold">CSU</span>
+        <div className="relative h-10 w-10 overflow-hidden">
+          <Image src="/images/csu-logo.png" alt="CSU Logo" fill className="object-contain" priority />
         </div>
         <div className="hidden md:block">
           <h1 className="text-xl font-bold text-white">CARAGA STATE UNIVERSITY</h1>
@@ -227,6 +230,7 @@ export function TopNavbar() {
                 <Button
                   variant="outline"
                   className="w-full justify-start bg-transparent text-white border-white/20 hover:bg-[#0a3d16] hover:text-white"
+                  onClick={() => router.push("/login")}
                 >
                   <LogOut className="mr-2 h-5 w-5" />
                   Logout
@@ -475,7 +479,10 @@ export function TopNavbar() {
               <span>Help</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600">
+            <DropdownMenuItem
+              className="cursor-pointer text-red-600 focus:text-red-600"
+              onClick={() => router.push("/login")}
+            >
               <LogOut className="mr-2 h-4 w-4" />
               <span>Logout</span>
             </DropdownMenuItem>
