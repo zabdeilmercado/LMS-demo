@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { LogOut } from "lucide-react"
+import { resetOnboardingTour } from "@/utils/reset-tour"
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("Settings")
@@ -774,6 +775,17 @@ export default function SettingsPage() {
                       </Card>
                     </div>
                   </TabsContent>
+                </div>
+
+                <div className="mt-6 rounded-lg border bg-white p-6 shadow-sm">
+                  <h2 className="text-xl font-semibold text-[#0B4619]">Onboarding Tour</h2>
+                  <p className="mt-2 text-gray-600">Reset the onboarding tour to see it again on your next visit.</p>
+
+                  <div className="mt-4">
+                    <Button onClick={resetOnboardingTour} className="bg-[#0B4619] hover:bg-[#0a3d16]">
+                      Reset Onboarding Tour
+                    </Button>
+                  </div>
                 </div>
               </Tabs>
             </div>

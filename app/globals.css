@@ -54,3 +54,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Onboarding Tour Styles */
+.tour-highlight-element::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+.tour-highlight-element::after {
+  content: "";
+  position: absolute;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  border-radius: 4px;
+}

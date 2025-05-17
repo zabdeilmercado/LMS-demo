@@ -10,6 +10,7 @@ import { UpcomingAssignments } from "@/components/upcoming-assignments"
 import { RecentAnnouncements } from "@/components/recent-announcements"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { motion } from "framer-motion"
+import { OnboardingTour } from "@/components/onboarding-tour"
 
 export function LMSDashboard() {
   const [activeTab, setActiveTab] = useState("Home")
@@ -157,6 +158,7 @@ export function LMSDashboard() {
         </main>
         <RightSidebar />
       </div>
+      <OnboardingTour />
     </div>
   )
 }

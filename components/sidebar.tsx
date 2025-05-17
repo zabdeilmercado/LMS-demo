@@ -47,7 +47,9 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
 
   return (
     <div
+      id="sidebar"
       className={cn(
+        "hidden w-64 flex-shrink-0 border-r border-gray-200 bg-white md:block",
         "flex flex-col border-r bg-[#0B4619] text-white transition-all duration-300 ease-in-out",
         isExpanded ? "w-64" : "w-20",
       )}

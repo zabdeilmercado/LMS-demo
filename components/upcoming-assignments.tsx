@@ -101,44 +101,49 @@ export function UpcomingAssignments() {
   }
 
   return (
-    <Card className="h-full border shadow-sm">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg font-semibold">Upcoming Assignments</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {assignments.map((assignment) => (
-            <div key={assignment.id} className="rounded-lg border p-3 transition-all hover:bg-gray-50 hover:shadow-sm">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-start justify-between">
-                  <h3 className="font-medium">{assignment.title}</h3>
-                  {getStatusBadge(assignment.status)}
-                </div>
-                <p className="text-xs text-gray-500">{assignment.course}</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
-                    <Calendar className="h-3 w-3" />
-                    <span>{assignment.dueDate}</span>
+    <div id="upcoming-assignments" className="rounded-lg border bg-white p-6 shadow-sm">
+      <Card className="h-full border shadow-sm">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-semibold">Upcoming Assignments</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {assignments.map((assignment) => (
+              <div
+                key={assignment.id}
+                className="rounded-lg border p-3 transition-all hover:bg-gray-50 hover:shadow-sm"
+              >
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-start justify-between">
+                    <h3 className="font-medium">{assignment.title}</h3>
+                    {getStatusBadge(assignment.status)}
                   </div>
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
-                    <Clock className="h-3 w-3" />
-                    <span>{assignment.daysLeft} days left</span>
+                  <p className="text-xs text-gray-500">{assignment.course}</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1 text-xs text-gray-500">
+                      <Calendar className="h-3 w-3" />
+                      <span>{assignment.dueDate}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-gray-500">
+                      <Clock className="h-3 w-3" />
+                      <span>{assignment.daysLeft} days left</span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center justify-between pt-1">
-                  <div className="flex-1 pr-4">
-                    <Progress value={getProgressValue(assignment.status)} className="h-1.5" />
+                  <div className="flex items-center justify-between pt-1">
+                    <div className="flex-1 pr-4">
+                      <Progress value={getProgressValue(assignment.status)} className="h-1.5" />
+                    </div>
+                    {getPriorityIndicator(assignment.priority)}
                   </div>
-                  {getPriorityIndicator(assignment.priority)}
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-        <button className="mt-4 w-full rounded-md border border-[#0B4619] py-2 text-sm font-medium text-[#0B4619] transition-colors hover:bg-[#0B4619]/5">
-          View All Assignments
-        </button>
-      </CardContent>
-    </Card>
+            ))}
+          </div>
+          <button className="mt-4 w-full rounded-md border border-[#0B4619] py-2 text-sm font-medium text-[#0B4619] transition-colors hover:bg-[#0B4619]/5">
+            View All Assignments
+          </button>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

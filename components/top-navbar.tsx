@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 export function TopNavbar() {
@@ -264,7 +265,7 @@ export function TopNavbar() {
                 >
                   <div className="flex items-start gap-3">
                     <Avatar className="h-9 w-9 border border-gray-200">
-                      <AvatarFallback className="bg-[#0B4619] text-white">ZB</AvatarFallback>
+                      <AvatarFallback className="bg-[#0B4619] text-white">{email.avatar}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between">
@@ -453,7 +454,7 @@ export function TopNavbar() {
             <Button variant="ghost" className="flex items-center space-x-2 hover:bg-[#0a3d16] transition-colors">
               <Avatar className="h-8 w-8 border-2 border-[#FFD700]/50">
                 <AvatarImage src="/placeholder.svg" alt="User" />
-                <AvatarFallback className="bg-[#FFD700] text-[#0B4619]">ZB</AvatarFallback>
+                <AvatarFallback className="bg-[#FFD700] text-[#0B4619] text-xs font-medium">ZBY</AvatarFallback>
               </Avatar>
               <span className="hidden md:inline-block text-white">zabbyy</span>
             </Button>
@@ -461,17 +462,23 @@ export function TopNavbar() {
           <DropdownMenuContent align="end" className="w-56" sideOffset={5}>
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer">
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link href="/profile">
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
-              <Settings className="mr-2 h-4 w-4" />
-              <span>Settings</span>
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link href="/settings">
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
-              <HelpCircle className="mr-2 h-4 w-4" />
-              <span>Help</span>
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link href="/help">
+                <HelpCircle className="mr-2 h-4 w-4" />
+                <span>Help</span>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
