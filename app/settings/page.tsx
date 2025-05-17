@@ -9,11 +9,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { Moon, Sun, LogOut, Monitor } from "lucide-react"
+import { LogOut } from "lucide-react"
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("Settings")
-  const [theme, setTheme] = useState("light")
 
   return (
     <div className="flex h-screen flex-col bg-gray-50">
@@ -72,13 +71,13 @@ export default function SettingsPage() {
                                   <label htmlFor="first-name" className="text-sm font-medium">
                                     First Name
                                   </label>
-                                  <Input id="first-name" defaultValue="Uriel" />
+                                  <Input id="first-name" defaultValue="zabbyy" />
                                 </div>
                                 <div className="space-y-2">
                                   <label htmlFor="last-name" className="text-sm font-medium">
                                     Last Name
                                   </label>
-                                  <Input id="last-name" defaultValue="Christian J." />
+                                  <Input id="last-name" defaultValue="" />
                                 </div>
                               </div>
 
@@ -86,7 +85,7 @@ export default function SettingsPage() {
                                 <label htmlFor="email" className="text-sm font-medium">
                                   Email Address
                                 </label>
-                                <Input id="email" type="email" defaultValue="uriel.christian@example.com" />
+                                <Input id="email" type="email" defaultValue="zabbyy@example.com" />
                               </div>
 
                               <div className="space-y-2">
@@ -191,7 +190,7 @@ export default function SettingsPage() {
                           <CardContent className="flex flex-col items-center">
                             <Avatar className="h-32 w-32 border-4 border-white shadow-md">
                               <AvatarImage src="/placeholder.svg" alt="User" />
-                              <AvatarFallback className="bg-[#0B4619] text-white text-2xl">UC</AvatarFallback>
+                              <AvatarFallback className="bg-[#0B4619] text-white text-2xl">ZB</AvatarFallback>
                             </Avatar>
                             <div className="mt-4 flex gap-2">
                               <Button variant="outline">Upload New</Button>
@@ -486,7 +485,6 @@ export default function SettingsPage() {
                               />
                             </div>
                           </div>
-
                           <div className="flex items-center justify-between">
                             <div>
                               <h3 className="font-medium">Course Announcements</h3>
@@ -501,7 +499,6 @@ export default function SettingsPage() {
                               />
                             </div>
                           </div>
-
                           <div className="flex items-center justify-between">
                             <div>
                               <h3 className="font-medium">Discussion Replies</h3>
@@ -575,16 +572,13 @@ export default function SettingsPage() {
                               <h3 className="font-medium">Course Announcements</h3>
                               <p className="text-sm text-gray-500">Receive notifications about course announcements</p>
                             </div>
-                            <div className="flex items-center">
-                              <input
-                                type="checkbox"
-                                id="push-announcements"
-                                className="h-4 w-4 rounded border-gray-300"
-                                defaultChecked
-                              />
-                            </div>
+                            <input
+                              type="checkbox"
+                              id="push-announcements"
+                              className="h-4 w-4 rounded border-gray-300"
+                              defaultChecked
+                            />
                           </div>
-
                           <div className="flex items-center justify-between">
                             <div>
                               <h3 className="font-medium">Discussion Replies</h3>
@@ -609,9 +603,7 @@ export default function SettingsPage() {
                                 Receive notifications about system maintenance and updates
                               </p>
                             </div>
-                            <div className="flex items-center">
-                              <input type="checkbox" id="push-system" className="h-4 w-4 rounded border-gray-300" />
-                            </div>
+                            <input type="checkbox" id="push-system" className="h-4 w-4 rounded border-gray-300" />
                           </div>
                         </div>
                       </CardContent>
@@ -633,35 +625,24 @@ export default function SettingsPage() {
                               defaultChecked
                             />
                             <label htmlFor="freq-realtime" className="ml-2">
-                              <div>
-                                <h3 className="font-medium">Real-time</h3>
-                                <p className="text-sm text-gray-500">Receive notifications as events occur</p>
-                              </div>
+                              Real-time
                             </label>
                           </div>
-
                           <div className="flex items-center">
                             <input type="radio" id="freq-daily" name="frequency" className="h-4 w-4 border-gray-300" />
                             <label htmlFor="freq-daily" className="ml-2">
-                              <div>
-                                <h3 className="font-medium">Daily Digest</h3>
-                                <p className="text-sm text-gray-500">Receive a daily summary of all notifications</p>
-                              </div>
+                              Daily digest
                             </label>
                           </div>
-
                           <div className="flex items-center">
                             <input type="radio" id="freq-weekly" name="frequency" className="h-4 w-4 border-gray-300" />
                             <label htmlFor="freq-weekly" className="ml-2">
-                              <div>
-                                <h3 className="font-medium">Weekly Digest</h3>
-                                <p className="text-sm text-gray-500">Receive a weekly summary of all notifications</p>
-                              </div>
+                              Weekly digest
                             </label>
                           </div>
-
-                          <Button className="bg-[#0B4619] hover:bg-[#0a3d16]">Save Notification Settings</Button>
                         </div>
+
+                        <Button className="bg-[#0B4619] hover:bg-[#0a3d16] mt-4">Save Notification Settings</Button>
                       </CardContent>
                     </Card>
                   </TabsContent>
@@ -673,60 +654,6 @@ export default function SettingsPage() {
                     </div>
 
                     <div className="grid gap-6 md:grid-cols-2">
-                      <Card className="border shadow-sm">
-                        <CardHeader>
-                          <CardTitle>Theme</CardTitle>
-                          <CardDescription>Choose your preferred theme</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="space-y-4">
-                            <div className="grid grid-cols-3 gap-4">
-                              <div
-                                className={`cursor-pointer rounded-lg border p-4 text-center transition-all hover:border-[#0B4619] ${
-                                  theme === "light" ? "border-[#0B4619] bg-green-50" : ""
-                                }`}
-                                onClick={() => setTheme("light")}
-                              >
-                                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-white text-black shadow-sm">
-                                  <Sun className="h-5 w-5" />
-                                </div>
-                                <div className="font-medium">Light</div>
-                              </div>
-
-                              <div
-                                className={`cursor-pointer rounded-lg border p-4 text-center transition-all hover:border-[#0B4619] ${
-                                  theme === "dark" ? "border-[#0B4619] bg-green-50" : ""
-                                }`}
-                                onClick={() => setTheme("dark")}
-                              >
-                                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-white shadow-sm">
-                                  <Moon className="h-5 w-5" />
-                                </div>
-                                <div className="font-medium">Dark</div>
-                              </div>
-
-                              <div
-                                className={`cursor-pointer rounded-lg border p-4 text-center transition-all hover:border-[#0B4619] ${
-                                  theme === "system" ? "border-[#0B4619] bg-green-50" : ""
-                                }`}
-                                onClick={() => setTheme("system")}
-                              >
-                                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-gray-100 to-gray-900 shadow-sm">
-                                  <Monitor className="h-5 w-5" />
-                                </div>
-                                <div className="font-medium">System</div>
-                              </div>
-                            </div>
-
-                            <div className="mt-4">
-                              <p className="text-sm text-gray-500">
-                                Your theme preference will be saved for your next visit.
-                              </p>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-
                       <Card className="border shadow-sm">
                         <CardHeader>
                           <CardTitle>Text Size</CardTitle>

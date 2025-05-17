@@ -56,9 +56,9 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
     >
       <div className="flex flex-col items-center py-6">
         <div className="relative">
-          <Avatar className={cn("border-2 border-white/20 transition-all", isExpanded ? "h-16 w-16" : "h-10 w-10")}>
+          <Avatar className={cn("border-2 border-[#FFD700] transition-all", isExpanded ? "h-16 w-16" : "h-10 w-10")}>
             <AvatarImage src="/placeholder.svg" alt="User" />
-            <AvatarFallback className="bg-[#FFD700] text-[#0B4619] font-bold">UC</AvatarFallback>
+            <AvatarFallback className="bg-[#FFD700] text-[#0B4619] font-bold">ZB</AvatarFallback>
           </Avatar>
           <div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#FFD700] text-[#0B4619] text-xs font-bold">
             20
@@ -67,14 +67,14 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
 
         {isExpanded && (
           <div className="mt-3 text-center">
-            <h3 className="font-medium">Uriel Christian J.</h3>
+            <h3 className="font-medium">zabbyy</h3>
             <p className="text-xs text-white/70">Student</p>
             <div className="mt-2 px-4">
               <div className="flex items-center justify-between text-xs">
                 <span>Level 20</span>
                 <span>88/100 XP</span>
               </div>
-              <Progress value={88} className="h-1.5 mt-1 bg-white/20" />
+              <Progress value={88} className="h-1.5 mt-1 bg-white/20" indicatorClassName="bg-[#FFD700]" />
             </div>
           </div>
         )}
@@ -87,7 +87,9 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
               key={item.name}
               className={cn(
                 "group flex items-center rounded-md px-3 py-2 text-sm transition-colors w-full",
-                activeTab === item.name ? "bg-white/10 text-white" : "text-white/80 hover:bg-white/10 hover:text-white",
+                activeTab === item.name
+                  ? "bg-[#FFD700]/20 text-[#FFD700]"
+                  : "text-white/80 hover:bg-white/10 hover:text-[#FFD700]",
                 !isExpanded && "justify-center",
               )}
               onClick={() => setActiveTab(item.name)}
@@ -111,14 +113,14 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
         </nav>
       </div>
 
-      <div className="mt-auto border-t border-white/10 px-2 py-2">
+      <div className="mt-auto border-t border-[#FFD700]/20 px-2 py-2">
         <nav className="flex flex-col space-y-1">
           {bottomMenuItems.map((item) => (
             <button
               key={item.name}
               className={cn(
                 "group flex items-center rounded-md px-3 py-2 text-sm transition-colors w-full",
-                "text-white/80 hover:bg-white/10 hover:text-white",
+                "text-white/80 hover:bg-white/10 hover:text-[#FFD700]",
                 !isExpanded && "justify-center",
               )}
             >

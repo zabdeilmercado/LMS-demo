@@ -29,18 +29,19 @@ export default function CoursePage() {
         <Sidebar activeTab="Classes" setActiveTab={() => {}} />
         <main className="flex-1 overflow-auto bg-gray-50">
           <div className="relative">
-            <div className="h-40 w-full bg-gradient-to-r from-blue-600 to-blue-800"></div>
+            {/* Changed from blue gradient to green and gold */}
+            <div className="h-40 w-full bg-gradient-to-r from-[#0B4619] to-[#0B4619]"></div>
             <div className="absolute inset-x-0 bottom-0 flex items-end px-6 py-4 text-white">
               <div>
                 <h1 className="text-2xl font-bold">{course.title}</h1>
-                <p className="text-blue-100">{course.instructor}</p>
+                <p className="text-[#FFD700]">{course.instructor}</p>
               </div>
               <div className="ml-auto flex space-x-2">
                 <Button variant="outline" className="bg-white/10 text-white hover:bg-white/20">
                   <Calendar className="mr-2 h-4 w-4" />
                   Schedule
                 </Button>
-                <Button className="bg-white text-blue-700 hover:bg-white/90">
+                <Button className="bg-[#FFD700] text-[#0B4619] hover:bg-[#FFD700]/90">
                   <CheckCircle className="mr-2 h-4 w-4" />
                   Mark as Complete
                 </Button>
@@ -53,25 +54,25 @@ export default function CoursePage() {
               <TabsList className="mb-4 w-full justify-start bg-transparent p-0">
                 <TabsTrigger
                   value="content"
-                  className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                  className="data-[state=active]:border-b-2 data-[state=active]:border-[#FFD700] data-[state=active]:bg-transparent data-[state=active]:shadow-none"
                 >
                   Content
                 </TabsTrigger>
                 <TabsTrigger
                   value="assignments"
-                  className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                  className="data-[state=active]:border-b-2 data-[state=active]:border-[#FFD700] data-[state=active]:bg-transparent data-[state=active]:shadow-none"
                 >
                   Assignments
                 </TabsTrigger>
                 <TabsTrigger
                   value="discussions"
-                  className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                  className="data-[state=active]:border-b-2 data-[state=active]:border-[#FFD700] data-[state=active]:bg-transparent data-[state=active]:shadow-none"
                 >
                   Discussions
                 </TabsTrigger>
                 <TabsTrigger
                   value="grades"
-                  className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                  className="data-[state=active]:border-b-2 data-[state=active]:border-[#FFD700] data-[state=active]:bg-transparent data-[state=active]:shadow-none"
                 >
                   Grades
                 </TabsTrigger>
@@ -89,7 +90,7 @@ export default function CoursePage() {
                         <div className="space-y-4">
                           <div className="rounded-lg border p-4 hover:bg-gray-50">
                             <div className="flex items-center">
-                              <div className="mr-4 rounded-full bg-blue-100 p-2 text-blue-600">
+                              <div className="mr-4 rounded-full bg-[#0B4619]/10 p-2 text-[#0B4619]">
                                 <FileText className="h-5 w-5" />
                               </div>
                               <div>
@@ -104,7 +105,7 @@ export default function CoursePage() {
 
                           <div className="rounded-lg border p-4 hover:bg-gray-50">
                             <div className="flex items-center">
-                              <div className="mr-4 rounded-full bg-blue-100 p-2 text-blue-600">
+                              <div className="mr-4 rounded-full bg-[#0B4619]/10 p-2 text-[#0B4619]">
                                 <Video className="h-5 w-5" />
                               </div>
                               <div>
@@ -119,7 +120,7 @@ export default function CoursePage() {
 
                           <div className="rounded-lg border p-4 hover:bg-gray-50">
                             <div className="flex items-center">
-                              <div className="mr-4 rounded-full bg-blue-100 p-2 text-blue-600">
+                              <div className="mr-4 rounded-full bg-[#0B4619]/10 p-2 text-[#0B4619]">
                                 <BookOpen className="h-5 w-5" />
                               </div>
                               <div>
@@ -148,7 +149,11 @@ export default function CoursePage() {
                               <span>Overall Progress</span>
                               <span className="font-medium">{course.progress}%</span>
                             </div>
-                            <Progress value={course.progress} className="h-2" />
+                            <Progress
+                              value={course.progress}
+                              className="h-2 bg-[#FFD700]/30"
+                              indicatorClassName="bg-[#0B4619]"
+                            />
                           </div>
 
                           <div className="rounded-lg bg-gray-50 p-4">
@@ -223,7 +228,7 @@ export default function CoursePage() {
                     <div className="space-y-4">
                       <div className="rounded-lg border p-4 hover:bg-gray-50">
                         <div className="flex items-center">
-                          <div className="mr-4 rounded-full bg-blue-100 p-2 text-blue-600">
+                          <div className="mr-4 rounded-full bg-[#0B4619]/10 p-2 text-[#0B4619]">
                             <MessageSquare className="h-5 w-5" />
                           </div>
                           <div>
@@ -238,7 +243,7 @@ export default function CoursePage() {
 
                       <div className="rounded-lg border p-4 hover:bg-gray-50">
                         <div className="flex items-center">
-                          <div className="mr-4 rounded-full bg-blue-100 p-2 text-blue-600">
+                          <div className="mr-4 rounded-full bg-[#0B4619]/10 p-2 text-[#0B4619]">
                             <MessageSquare className="h-5 w-5" />
                           </div>
                           <div>

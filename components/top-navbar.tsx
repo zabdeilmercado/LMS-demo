@@ -100,22 +100,15 @@ export function TopNavbar() {
     { id: "courses", name: "Courses" },
     { id: "people", name: "People" },
     { id: "resources", name: "Resources" },
-    { id: "assignments", name: "Assignments" },
   ]
 
-  // Mock search functionality
   useEffect(() => {
-    if (searchQuery.length > 0) {
+    if (searchQuery) {
       setIsSearching(true)
       const timer = setTimeout(() => {
-        // Mock search results
-        const results = [
-          { id: 1, title: "Advance Networking", type: "course" },
-          { id: 2, title: "Elements of Research", type: "course" },
-          { id: 3, title: "Dr. Smith", type: "person" },
-          { id: 4, title: "Research Paper Guidelines", type: "resource" },
-          { id: 5, title: "Network Design Project", type: "assignment" },
-        ].filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        const results = [{ id: 6, title: "Network Design Project", type: "assignment" }].filter((item) =>
+          item.title?.toLowerCase().includes(searchQuery.toLowerCase()),
+        )
 
         setSearchResults(results)
         setIsSearching(false)
@@ -143,31 +136,31 @@ export function TopNavbar() {
     switch (type) {
       case "assignment":
         return (
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FFD700]/20 text-[#FFD700]">
             <Calendar className="h-4 w-4" />
           </div>
         )
       case "course":
         return (
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FFD700]/20 text-[#FFD700]">
             <Book className="h-4 w-4" />
           </div>
         )
       case "grade":
         return (
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-600">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FFD700]/20 text-[#FFD700]">
             <CheckCircle className="h-4 w-4" />
           </div>
         )
       case "system":
         return (
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100 text-purple-600">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FFD700]/20 text-[#FFD700]">
             <Settings className="h-4 w-4" />
           </div>
         )
       default:
         return (
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-[#0B4619]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FFD700]/20 text-[#FFD700]">
             <Bell className="h-4 w-4" />
           </div>
         )
@@ -186,12 +179,12 @@ export function TopNavbar() {
           {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
 
-        <div className="relative h-10 w-10 overflow-hidden">
+        <div className="relative h-10 w-10 overflow-hidden rounded-full">
           <Image src="/images/csu-logo.png" alt="CSU Logo" fill className="object-contain" priority />
         </div>
         <div className="hidden md:block">
           <h1 className="text-xl font-bold text-white">CARAGA STATE UNIVERSITY</h1>
-          <p className="text-xs text-white/80">Competence, Service, and Uprightness</p>
+          <p className="text-xs text-[#FFD700]">Competence, Service, and Uprightness</p>
         </div>
         <div className="md:hidden">
           <h1 className="text-lg font-bold text-white">CSU</h1>
@@ -211,12 +204,14 @@ export function TopNavbar() {
               <Button variant="ghost" className="w-full justify-start text-white hover:bg-[#0a3d16]">
                 <Mail className="mr-2 h-5 w-5" />
                 Messages
-                {unreadEmails > 0 && <Badge className="ml-auto bg-amber-500">{unreadEmails}</Badge>}
+                {unreadEmails > 0 && <Badge className="ml-auto bg-[#FFD700] text-[#0B4619]">{unreadEmails}</Badge>}
               </Button>
               <Button variant="ghost" className="w-full justify-start text-white hover:bg-[#0a3d16]">
                 <Bell className="mr-2 h-5 w-5" />
                 Notifications
-                {unreadNotifications > 0 && <Badge className="ml-auto bg-amber-500">{unreadNotifications}</Badge>}
+                {unreadNotifications > 0 && (
+                  <Badge className="ml-auto bg-[#FFD700] text-[#0B4619]">{unreadNotifications}</Badge>
+                )}
               </Button>
               <Button variant="ghost" className="w-full justify-start text-white hover:bg-[#0a3d16]">
                 <Calendar className="mr-2 h-5 w-5" />
@@ -229,7 +224,7 @@ export function TopNavbar() {
               <div className="pt-2">
                 <Button
                   variant="outline"
-                  className="w-full justify-start bg-transparent text-white border-white/20 hover:bg-[#0a3d16] hover:text-white"
+                  className="w-full justify-start bg-transparent text-white border-[#FFD700]/30 hover:bg-[#0a3d16] hover:text-[#FFD700]"
                   onClick={() => router.push("/login")}
                 >
                   <LogOut className="mr-2 h-5 w-5" />
@@ -247,7 +242,7 @@ export function TopNavbar() {
             <Button variant="ghost" size="icon" className="relative text-white hover:bg-[#0a3d16] transition-colors">
               <Mail className="h-5 w-5" />
               {unreadEmails > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-xs font-medium shadow-sm">
+                <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFD700] text-xs font-medium text-[#0B4619] shadow-sm">
                   {unreadEmails}
                 </span>
               )}
@@ -264,16 +259,16 @@ export function TopNavbar() {
               {emails.map((email) => (
                 <div
                   key={email.id}
-                  className={`border-b p-3 hover:bg-gray-50 transition-colors cursor-pointer ${!email.read ? "bg-green-50" : ""}`}
+                  className={`border-b p-3 hover:bg-[#f5f5f5] transition-colors cursor-pointer ${!email.read ? "bg-[#f0f9f0]" : ""}`}
                   onClick={() => markEmailAsRead(email.id)}
                 >
                   <div className="flex items-start gap-3">
                     <Avatar className="h-9 w-9 border border-gray-200">
-                      <AvatarFallback className="bg-[#0B4619] text-white">{email.avatar}</AvatarFallback>
+                      <AvatarFallback className="bg-[#0B4619] text-white">ZB</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between">
-                        <p className={`text-sm font-medium truncate ${!email.read ? "text-green-700" : ""}`}>
+                        <p className={`text-sm font-medium truncate ${!email.read ? "text-[#0B4619]" : ""}`}>
                           {email.sender}
                         </p>
                         <span className="text-xs text-gray-500 whitespace-nowrap">{email.time}</span>
@@ -287,7 +282,7 @@ export function TopNavbar() {
             <div className="border-t p-2">
               <Button
                 variant="ghost"
-                className="w-full justify-center text-[#0B4619] hover:bg-green-50 hover:text-[#0B4619]"
+                className="w-full justify-center text-[#0B4619] hover:bg-[#f0f9f0] hover:text-[#0B4619]"
               >
                 View all messages
               </Button>
@@ -300,7 +295,7 @@ export function TopNavbar() {
             <Button variant="ghost" size="icon" className="relative text-white hover:bg-[#0a3d16] transition-colors">
               <Bell className="h-5 w-5" />
               {unreadNotifications > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-xs font-medium shadow-sm">
+                <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFD700] text-xs font-medium text-[#0B4619] shadow-sm">
                   {unreadNotifications}
                 </span>
               )}
@@ -317,14 +312,14 @@ export function TopNavbar() {
               {notifications.map((notification) => (
                 <div
                   key={notification.id}
-                  className={`border-b p-3 hover:bg-gray-50 transition-colors cursor-pointer ${!notification.read ? "bg-green-50" : ""}`}
+                  className={`border-b p-3 hover:bg-[#f5f5f5] transition-colors cursor-pointer ${!notification.read ? "bg-[#f0f9f0]" : ""}`}
                   onClick={() => markNotificationAsRead(notification.id)}
                 >
                   <div className="flex gap-3">
                     {getNotificationIcon(notification.type)}
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between">
-                        <p className={`text-sm font-medium truncate ${!notification.read ? "text-green-700" : ""}`}>
+                        <p className={`text-sm font-medium truncate ${!notification.read ? "text-[#0B4619]" : ""}`}>
                           {notification.title}
                         </p>
                         <span className="text-xs text-gray-500 whitespace-nowrap">{notification.time}</span>
@@ -338,7 +333,7 @@ export function TopNavbar() {
             <div className="border-t p-2">
               <Button
                 variant="ghost"
-                className="w-full justify-center text-[#0B4619] hover:bg-green-50 hover:text-[#0B4619]"
+                className="w-full justify-center text-[#0B4619] hover:bg-[#f0f9f0] hover:text-[#0B4619]"
               >
                 View all notifications
               </Button>
@@ -358,15 +353,15 @@ export function TopNavbar() {
             </div>
             <div className="max-h-[350px] overflow-auto">
               {events.map((event) => (
-                <div key={event.id} className="border-b p-3 hover:bg-gray-50 transition-colors">
+                <div key={event.id} className="border-b p-3 hover:bg-[#f5f5f5] transition-colors">
                   <div className="flex gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-green-100 text-[#0B4619]">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f0f9f0] text-[#0B4619]">
                       <Calendar className="h-4 w-4" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
                         <p className="text-sm font-medium">{event.title}</p>
-                        <Badge variant="outline" className="h-5 text-xs">
+                        <Badge variant="outline" className="h-5 text-xs border-[#FFD700] text-[#0B4619]">
                           {event.date}
                         </Badge>
                       </div>
@@ -380,7 +375,7 @@ export function TopNavbar() {
             <div className="border-t p-2">
               <Button
                 variant="ghost"
-                className="w-full justify-center text-[#0B4619] hover:bg-green-50 hover:text-[#0B4619]"
+                className="w-full justify-center text-[#0B4619] hover:bg-[#f0f9f0] hover:text-[#0B4619]"
               >
                 View full calendar
               </Button>
@@ -425,7 +420,7 @@ export function TopNavbar() {
                           <h4 className="mb-1 text-xs font-medium text-gray-500 uppercase">{category.name}</h4>
                           <ul className="space-y-1">
                             {categoryResults.map((result) => (
-                              <li key={result.id} className="rounded-md p-2 text-sm hover:bg-gray-100 cursor-pointer">
+                              <li key={result.id} className="rounded-md p-2 text-sm hover:bg-[#f0f9f0] cursor-pointer">
                                 {result.title}
                               </li>
                             ))}
@@ -443,9 +438,9 @@ export function TopNavbar() {
                 <div>
                   <h4 className="mb-2 text-xs font-medium text-gray-500">RECENT SEARCHES</h4>
                   <ul className="space-y-1">
-                    <li className="rounded-md p-2 text-sm hover:bg-gray-100 cursor-pointer">IT 370 Assignment</li>
-                    <li className="rounded-md p-2 text-sm hover:bg-gray-100 cursor-pointer">Research Methods</li>
-                    <li className="rounded-md p-2 text-sm hover:bg-gray-100 cursor-pointer">Programming Lab</li>
+                    <li className="rounded-md p-2 text-sm hover:bg-[#f0f9f0] cursor-pointer">IT 370 Assignment</li>
+                    <li className="rounded-md p-2 text-sm hover:bg-[#f0f9f0] cursor-pointer">Research Methods</li>
+                    <li className="rounded-md p-2 text-sm hover:bg-[#f0f9f0] cursor-pointer">Programming Lab</li>
                   </ul>
                 </div>
               )}
@@ -456,11 +451,11 @@ export function TopNavbar() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="flex items-center space-x-2 hover:bg-[#0a3d16] transition-colors">
-              <Avatar className="h-8 w-8 border-2 border-white/20">
+              <Avatar className="h-8 w-8 border-2 border-[#FFD700]/50">
                 <AvatarImage src="/placeholder.svg" alt="User" />
-                <AvatarFallback className="bg-[#FFD700] text-[#0B4619]">UC</AvatarFallback>
+                <AvatarFallback className="bg-[#FFD700] text-[#0B4619]">ZB</AvatarFallback>
               </Avatar>
-              <span className="hidden md:inline-block text-white">Uriel Christian J.</span>
+              <span className="hidden md:inline-block text-white">zabbyy</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56" sideOffset={5}>

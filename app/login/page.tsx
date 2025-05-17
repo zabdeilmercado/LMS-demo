@@ -47,30 +47,35 @@ export default function LoginPage() {
               />
             </div>
             <h1 className="mt-4 text-2xl font-bold text-[#0B4619]">CARAGA STATE UNIVERSITY</h1>
-            <p className="text-sm text-gray-600">Competence, Service, and Uprightness</p>
+            <p className="text-sm text-[#F0A500]">Competence, Service, and Uprightness</p>
           </div>
 
-          <Card className="border shadow-md">
+          <Card className="border border-[#0B4619]/10 shadow-md">
             <CardHeader className="space-y-1">
-              <CardTitle className="text-xl text-center">Sign in to your account</CardTitle>
+              <CardTitle className="text-xl text-center text-[#0B4619]">Sign in to your account</CardTitle>
               <CardDescription className="text-center">Enter your email and password to access the LMS</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className="text-[#0B4619]">
+                    Email
+                  </Label>
                   <Input
                     id="email"
                     type="email"
                     placeholder="student@carsu.edu.ph"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className="border-[#0B4619]/20 focus-visible:ring-[#0B4619]"
                     required
                   />
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password" className="text-[#0B4619]">
+                      Password
+                    </Label>
                     <Link href="/forgot-password" className="text-xs text-[#0B4619] hover:underline">
                       Forgot password?
                     </Link>
@@ -82,11 +87,12 @@ export default function LoginPage() {
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      className="border-[#0B4619]/20 focus-visible:ring-[#0B4619]"
                       required
                     />
                     <button
                       type="button"
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#0B4619]"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <EyeOffIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
@@ -98,8 +104,9 @@ export default function LoginPage() {
                     id="remember"
                     checked={rememberMe}
                     onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                    className="border-[#0B4619]/20 data-[state=checked]:bg-[#0B4619] data-[state=checked]:text-white"
                   />
-                  <Label htmlFor="remember" className="text-sm font-normal">
+                  <Label htmlFor="remember" className="text-sm font-normal text-[#0B4619]">
                     Remember me
                   </Label>
                 </div>
@@ -147,13 +154,13 @@ export default function LoginPage() {
           <div className="mt-6 text-center text-xs text-gray-500">
             <p>© {new Date().getFullYear()} Caraga State University. All rights reserved.</p>
             <div className="mt-2 flex justify-center space-x-4">
-              <Link href="#" className="hover:underline">
+              <Link href="#" className="hover:underline text-[#0B4619]/70 hover:text-[#0B4619]">
                 Privacy Policy
               </Link>
-              <Link href="#" className="hover:underline">
+              <Link href="#" className="hover:underline text-[#0B4619]/70 hover:text-[#0B4619]">
                 Terms of Service
               </Link>
-              <Link href="#" className="hover:underline">
+              <Link href="#" className="hover:underline text-[#0B4619]/70 hover:text-[#0B4619]">
                 Help Center
               </Link>
             </div>

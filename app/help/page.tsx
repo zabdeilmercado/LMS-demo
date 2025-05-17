@@ -399,13 +399,13 @@ export default function HelpPage() {
                                   <label htmlFor="name" className="text-sm font-medium">
                                     Name
                                   </label>
-                                  <Input id="name" defaultValue="Uriel Christian J." />
+                                  <Input id="name" defaultValue="zabbyy" />
                                 </div>
                                 <div className="space-y-2">
                                   <label htmlFor="email" className="text-sm font-medium">
                                     Email
                                   </label>
-                                  <Input id="email" type="email" defaultValue="uriel.christian@example.com" />
+                                  <Input id="email" type="email" defaultValue="zabbyy@example.com" />
                                 </div>
                               </div>
 
