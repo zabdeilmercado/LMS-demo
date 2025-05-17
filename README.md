@@ -82,7 +82,8 @@ Build LMS-demo from the source and install dependencies:
 
 ## 📦 Usage
 
-To run the development server:
+To run the project with:
 
 ```bash
 npm run dev
+
