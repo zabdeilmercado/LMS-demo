@@ -60,23 +60,23 @@ Build LMS-demo from the source and install dependencies:
 
 1. **Clone the repository:**
 
-    ```bash
+    \`\`\`bash
     git clone https://github.com/zabdeilmercado/LMS-demo
-    ```
+    \`\`\`
 
 2. **Navigate to the project directory:**
 
-    ```bash
+    \`\`\`bash
     cd LMS-demo
-    ```
+    \`\`\`
 
 3. **Install the dependencies:**
 
     Using [npm](https://www.npmjs.com/):
 
-    ```bash
+    \`\`\`bash
     npm install
-    ```
+    \`\`\`
 
 ---
 
@@ -84,6 +84,5 @@ Build LMS-demo from the source and install dependencies:
 
 To run the project with:
 
-```bash
+\`\`\`bash
 npm run dev
-

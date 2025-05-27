@@ -456,7 +456,7 @@ export function TopNavbar() {
                 <AvatarImage src="/placeholder.svg" alt="User" />
                 <AvatarFallback className="bg-[#FFD700] text-[#0B4619] text-xs font-medium">ZBY</AvatarFallback>
               </Avatar>
-              <span className="hidden md:inline-block text-white">zabbyy</span>
+              <span className="hidden md:inline-block text-white">Zabbyy</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56" sideOffset={5}>
