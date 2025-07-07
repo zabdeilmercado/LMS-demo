@@ -1,8 +1,8 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -22,6 +22,26 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Check if user is already authenticated
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken")
+    const userSession = localStorage.getItem("userSession")
+
+    if (authToken && userSession) {
+      // User is already logged in, redirect to dashboard
+      router.push("/")
+    }
+  }, [router])
+
+  // Show redirect message if user was redirected from protected route
+  useEffect(() => {
+    const redirected = searchParams.get("redirected")
+    if (redirected === "true") {
+      setError("Please log in to access the dashboard")
+    }
+  }, [searchParams])
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -59,15 +79,54 @@ export default function LoginPage() {
 
       // Mock authentication logic
       if (email === "admin@carsu.edu.ph" && password === "admin123") {
-        setSuccess("Login successful! Redirecting...")
+        // Store authentication data
+        const authToken = "mock-jwt-token-admin"
+        const userSession = JSON.stringify({
+          id: "1",
+          email: email,
+          name: "Admin User",
+          role: "admin",
+          loginTime: new Date().toISOString(),
+        })
+
+        localStorage.setItem("authToken", authToken)
+        localStorage.setItem("userSession", userSession)
+
+        if (rememberMe) {
+          localStorage.setItem("rememberMe", "true")
+        }
+
+        setSuccess("Login successful! Redirecting to dashboard...")
+
         setTimeout(() => {
           router.push("/")
-        }, 1000)
+        }, 1500)
       } else if (email.endsWith("@carsu.edu.ph") && password.length >= 6) {
-        setSuccess("Login successful! Redirecting...")
+        // Store authentication data for regular users
+        const authToken = "mock-jwt-token-user"
+        const userSession = JSON.stringify({
+          id: "2",
+          email: email,
+          name: email
+            .split("@")[0]
+            .replace(".", " ")
+            .replace(/\b\w/g, (l) => l.toUpperCase()),
+          role: "student",
+          loginTime: new Date().toISOString(),
+        })
+
+        localStorage.setItem("authToken", authToken)
+        localStorage.setItem("userSession", userSession)
+
+        if (rememberMe) {
+          localStorage.setItem("rememberMe", "true")
+        }
+
+        setSuccess("Login successful! Redirecting to dashboard...")
+
         setTimeout(() => {
           router.push("/")
-        }, 1000)
+        }, 1500)
       } else {
         setError("Invalid email or password. Please try again.")
       }
