@@ -174,7 +174,7 @@ export default function LoginPage() {
           </div>
 
           {/* Login Card */}
-          <Card className="border border-white/20 shadow-2xl bg-white/95 backdrop-blur-md">
+          <Card className="border border-white/20 shadow-2xl bg-white/80 backdrop-blur-md">
             <CardHeader className="space-y-1 pb-4">
               <CardTitle className="text-2xl text-center text-[#0B4619] font-bold">Welcome Back</CardTitle>
               <CardDescription className="text-center text-gray-600">
@@ -182,7 +182,7 @@ export default function LoginPage() {
               </CardDescription>
             </CardHeader>
 
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 bg-white/80 backdrop-blur-lg rounded-lg">
               {/* Error Alert */}
               {error && (
                 <Alert variant="destructive" className="border-red-200 bg-red-50">
@@ -211,7 +211,7 @@ export default function LoginPage() {
                     placeholder="student@carsu.edu.ph"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="border-[#0B4619]/20 focus-visible:ring-[#0B4619] focus-visible:border-[#0B4619] h-11 bg-white/90"
+                    className="border-[#0B4619]/20 focus-visible:ring-[#0B4619] focus-visible:border-[#0B4619] h-11 bg-white/70"
                     required
                     disabled={isLoading}
                   />
@@ -237,7 +237,7 @@ export default function LoginPage() {
                       placeholder="Enter your password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="border-[#0B4619]/20 focus-visible:ring-[#0B4619] focus-visible:border-[#0B4619] h-11 pr-10 bg-white/90"
+                      className="border-[#0B4619]/20 focus-visible:ring-[#0B4619] focus-visible:border-[#0B4619] h-11 pr-10 bg-white/70"
                       required
                       disabled={isLoading}
                     />
