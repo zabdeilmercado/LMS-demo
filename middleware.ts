@@ -1,43 +1,36 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
+// This is a simple middleware to handle authentication
+// In a real application, you would check for a valid session/token
 export function middleware(request: NextRequest) {
-  // Get the pathname of the request (e.g. /, /login, /dashboard)
-  const path = request.nextUrl.pathname
+  // For demonstration purposes, we'll just check if the path is not login
+  // and redirect to login if needed
 
-  // Define public paths that don't require authentication
-  const publicPaths = ["/login", "/register", "/forgot-password"]
+  // In a real app, you would check for a valid session cookie or token
+  const isAuthenticated = true // This would be your actual auth check
 
-  // Check if the current path is public
-  const isPublicPath = publicPaths.includes(path)
+  // Public paths that don't require authentication
+  const publicPaths = ["/login", "/forgot-password", "/register"]
 
-  // Get the token from the request headers or cookies
-  const token = request.cookies.get("authToken")?.value || ""
+  const isPublicPath = publicPaths.some((path) => request.nextUrl.pathname.startsWith(path))
 
-  // If the path is public and user has token, redirect to dashboard
-  if (isPublicPath && token) {
-    return NextResponse.redirect(new URL("/", request.nextUrl))
+  // If the user is not authenticated and trying to access a protected route
+  if (!isAuthenticated && !isPublicPath) {
+    const loginUrl = new URL("/login", request.url)
+    return NextResponse.redirect(loginUrl)
   }
 
-  // If the path is not public and no token, redirect to login
-  if (!isPublicPath && !token) {
-    return NextResponse.redirect(new URL("/login?redirected=true", request.nextUrl))
+  // If the user is authenticated and trying to access login page
+  if (isAuthenticated && isPublicPath) {
+    const dashboardUrl = new URL("/", request.url)
+    return NextResponse.redirect(dashboardUrl)
   }
 
   return NextResponse.next()
 }
 
-// Configure which paths the middleware should run on
+// See "Matching Paths" below to learn more
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder files
-     */
-    "/((?!api|_next/static|_next/image|favicon.ico|images|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.gif$|.*\\.svg$).*)",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 }
