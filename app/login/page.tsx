@@ -1,9 +1,8 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,7 +10,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { EyeIcon, EyeOffIcon } from "lucide-react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { EyeIcon, EyeOffIcon, AlertCircle, CheckCircle2 } from "lucide-react"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -19,17 +19,122 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Check if user is already authenticated
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken")
+    const userSession = localStorage.getItem("userSession")
+
+    if (authToken && userSession) {
+      // User is already logged in, redirect to dashboard
+      router.push("/")
+    }
+  }, [router])
+
+  // Show redirect message if user was redirected from protected route
+  useEffect(() => {
+    const redirected = searchParams.get("redirected")
+    if (redirected === "true") {
+      setError("Please log in to access the dashboard")
+    }
+  }, [searchParams])
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError("")
+    setSuccess("")
     setIsLoading(true)
 
-    // Simulate login delay
-    setTimeout(() => {
+    // Basic validation
+    if (!email || !password) {
+      setError("Please fill in all fields")
       setIsLoading(false)
-      router.push("/")
-    }, 1500)
+      return
+    }
+
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address")
+      setIsLoading(false)
+      return
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long")
+      setIsLoading(false)
+      return
+    }
+
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+
+      // Mock authentication logic - accept any valid email format with password length >= 6
+      if (email === "admin@carsu.edu.ph" && password === "admin123") {
+        // Store authentication data for admin
+        const authToken = "mock-jwt-token-admin"
+        const userSession = JSON.stringify({
+          id: "1",
+          email: email,
+          name: "Admin User",
+          role: "admin",
+          loginTime: new Date().toISOString(),
+        })
+
+        localStorage.setItem("authToken", authToken)
+        localStorage.setItem("userSession", userSession)
+
+        if (rememberMe) {
+          localStorage.setItem("rememberMe", "true")
+        }
+
+        setSuccess("Login successful! Redirecting to dashboard...")
+
+        setTimeout(() => {
+          router.push("/")
+        }, 1500)
+      } else if (validateEmail(email) && password.length >= 6) {
+        // Store authentication data for any valid user
+        const authToken = "mock-jwt-token-user"
+        const userSession = JSON.stringify({
+          id: "2",
+          email: email,
+          name: email
+            .split("@")[0]
+            .replace(".", " ")
+            .replace(/\b\w/g, (l) => l.toUpperCase()),
+          role: "student",
+          loginTime: new Date().toISOString(),
+        })
+
+        localStorage.setItem("authToken", authToken)
+        localStorage.setItem("userSession", userSession)
+
+        if (rememberMe) {
+          localStorage.setItem("rememberMe", "true")
+        }
+
+        setSuccess("Login successful! Redirecting to dashboard...")
+
+        setTimeout(() => {
+          router.push("/")
+        }, 1500)
+      } else {
+        setError("Invalid email or password. Please try again.")
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again later.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -56,6 +161,22 @@ export default function LoginPage() {
               <CardDescription className="text-center">Enter your email and password to access the LMS</CardDescription>
             </CardHeader>
             <CardContent>
+              {/* Error Alert */}
+              {error && (
+                <Alert variant="destructive" className="mb-4 border-red-200 bg-red-50">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+
+              {/* Success Alert */}
+              {success && (
+                <Alert className="mb-4 border-green-200 bg-green-50 text-green-800">
+                  <CheckCircle2 className="h-4 w-4" />
+                  <AlertDescription>{success}</AlertDescription>
+                </Alert>
+              )}
+
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-[#0B4619]">
@@ -69,6 +190,7 @@ export default function LoginPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="border-[#0B4619]/20 focus-visible:ring-[#0B4619]"
                     required
+                    disabled={isLoading}
                   />
                 </div>
                 <div className="space-y-2">
@@ -89,11 +211,13 @@ export default function LoginPage() {
                       onChange={(e) => setPassword(e.target.value)}
                       className="border-[#0B4619]/20 focus-visible:ring-[#0B4619]"
                       required
+                      disabled={isLoading}
                     />
                     <button
                       type="button"
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#0B4619]"
                       onClick={() => setShowPassword(!showPassword)}
+                      disabled={isLoading}
                     >
                       {showPassword ? <EyeOffIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
                     </button>
@@ -105,6 +229,7 @@ export default function LoginPage() {
                     checked={rememberMe}
                     onCheckedChange={(checked) => setRememberMe(checked as boolean)}
                     className="border-[#0B4619]/20 data-[state=checked]:bg-[#0B4619] data-[state=checked]:text-white"
+                    disabled={isLoading}
                   />
                   <Label htmlFor="remember" className="text-sm font-normal text-[#0B4619]">
                     Remember me
@@ -140,6 +265,14 @@ export default function LoginPage() {
                   )}
                 </Button>
               </form>
+
+              {/* Demo Credentials */}
+              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-xs text-blue-800 font-medium mb-1">Demo Credentials:</p>
+                <p className="text-xs text-blue-700">Email: admin@carsu.edu.ph</p>
+                <p className="text-xs text-blue-700">Password: admin123</p>
+                <p className="text-xs text-blue-600 mt-1">Or use any valid email with 6+ character password</p>
+              </div>
             </CardContent>
             <CardFooter className="flex flex-col">
               <div className="text-center text-sm">
