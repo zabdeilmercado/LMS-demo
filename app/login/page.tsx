@@ -138,8 +138,22 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="flex flex-1 items-center justify-center p-4">
+    <div className="flex min-h-screen relative">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/masaolms-login-bg-2.jpg"
+          alt="Caraga State University Campus"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Overlay for better readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0B4619]/80 via-[#0B4619]/70 to-[#0B4619]/90"></div>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-1 items-center justify-center p-4">
         <div className="w-full max-w-md">
           {/* University Header */}
           <div className="mb-8 flex flex-col items-center text-center">
@@ -148,17 +162,19 @@ export default function LoginPage() {
                 src="/images/csu-logo.png"
                 alt="Caraga State University Logo"
                 fill
-                className="object-contain drop-shadow-lg"
+                className="object-contain drop-shadow-2xl"
                 priority
               />
             </div>
-            <h1 className="text-2xl font-bold text-[#0B4619] mb-1">CARAGA STATE UNIVERSITY</h1>
-            <p className="text-sm text-[#F0A500] font-medium mb-2">Competence, Service, and Uprightness</p>
-            <div className="h-1 w-16 bg-gradient-to-r from-[#0B4619] to-[#F0A500] rounded-full"></div>
+            <h1 className="text-2xl font-bold text-white mb-1 drop-shadow-lg">CARAGA STATE UNIVERSITY</h1>
+            <p className="text-sm text-[#F0A500] font-medium mb-2 drop-shadow-md">
+              Competence, Service, and Uprightness
+            </p>
+            <div className="h-1 w-16 bg-gradient-to-r from-white to-[#F0A500] rounded-full"></div>
           </div>
 
           {/* Login Card */}
-          <Card className="border border-[#0B4619]/10 shadow-xl bg-white/95 backdrop-blur-sm">
+          <Card className="border border-white/20 shadow-2xl bg-white/95 backdrop-blur-md">
             <CardHeader className="space-y-1 pb-4">
               <CardTitle className="text-2xl text-center text-[#0B4619] font-bold">Welcome Back</CardTitle>
               <CardDescription className="text-center text-gray-600">
@@ -195,7 +211,7 @@ export default function LoginPage() {
                     placeholder="student@carsu.edu.ph"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="border-[#0B4619]/20 focus-visible:ring-[#0B4619] focus-visible:border-[#0B4619] h-11"
+                    className="border-[#0B4619]/20 focus-visible:ring-[#0B4619] focus-visible:border-[#0B4619] h-11 bg-white/90"
                     required
                     disabled={isLoading}
                   />
@@ -221,7 +237,7 @@ export default function LoginPage() {
                       placeholder="Enter your password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="border-[#0B4619]/20 focus-visible:ring-[#0B4619] focus-visible:border-[#0B4619] h-11 pr-10"
+                      className="border-[#0B4619]/20 focus-visible:ring-[#0B4619] focus-visible:border-[#0B4619] h-11 pr-10 bg-white/90"
                       required
                       disabled={isLoading}
                     />
@@ -253,7 +269,7 @@ export default function LoginPage() {
                 {/* Login Button */}
                 <Button
                   type="submit"
-                  className="w-full bg-[#0B4619] hover:bg-[#0a3d16] text-white font-medium h-11 transition-all duration-200 transform hover:scale-[1.02]"
+                  className="w-full bg-[#0B4619] hover:bg-[#0a3d16] text-white font-medium h-11 transition-all duration-200 transform hover:scale-[1.02] shadow-lg"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -287,7 +303,7 @@ export default function LoginPage() {
               </form>
 
               {/* Demo Credentials */}
-              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="mt-4 p-3 bg-blue-50/90 border border-blue-200 rounded-lg backdrop-blur-sm">
                 <p className="text-xs text-blue-800 font-medium mb-1">Demo Credentials:</p>
                 <p className="text-xs text-blue-700">Email: admin@carsu.edu.ph</p>
                 <p className="text-xs text-blue-700">Password: admin123</p>
@@ -318,16 +334,27 @@ export default function LoginPage() {
           </Card>
 
           {/* Footer */}
-          <div className="mt-8 text-center text-xs text-gray-500">
-            <p className="mb-2">© {new Date().getFullYear()} Caraga State University. All rights reserved.</p>
+          <div className="mt-8 text-center text-xs text-white/80">
+            <p className="mb-2 drop-shadow-md">
+              © {new Date().getFullYear()} Caraga State University. All rights reserved.
+            </p>
             <div className="flex justify-center space-x-4">
-              <Link href="#" className="hover:underline text-[#0B4619]/70 hover:text-[#0B4619] transition-colors">
+              <Link
+                href="#"
+                className="hover:underline text-white/70 hover:text-white transition-colors drop-shadow-md"
+              >
                 Privacy Policy
               </Link>
-              <Link href="#" className="hover:underline text-[#0B4619]/70 hover:text-[#0B4619] transition-colors">
+              <Link
+                href="#"
+                className="hover:underline text-white/70 hover:text-white transition-colors drop-shadow-md"
+              >
                 Terms of Service
               </Link>
-              <Link href="#" className="hover:underline text-[#0B4619]/70 hover:text-[#0B4619] transition-colors">
+              <Link
+                href="#"
+                className="hover:underline text-white/70 hover:text-white transition-colors drop-shadow-md"
+              >
                 Help Center
               </Link>
             </div>

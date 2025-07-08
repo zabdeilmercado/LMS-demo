@@ -1,48 +1,46 @@
 "use client"
 
-import { LMSDashboard } from "@/components/lms-dashboard"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { LMSDashboard } from "@/components/lms-dashboard"
 
-export default function Home() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(true)
+export default function HomePage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
-    // Check authentication status
     const checkAuth = () => {
-      // Check for authentication token/session
       const authToken = localStorage.getItem("authToken")
       const userSession = localStorage.getItem("userSession")
 
-      if (authToken && userSession) {
-        setIsAuthenticated(true)
-      } else {
-        setIsAuthenticated(false)
-        router.push("/login")
+      if (!authToken || !userSession) {
+        // User is not authenticated, redirect to login
+        router.push("/login?redirected=true")
+        return
       }
+
+      // User is authenticated
+      setIsAuthenticated(true)
       setIsLoading(false)
     }
 
     checkAuth()
   }, [router])
 
-  // Show loading spinner while checking authentication
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <div className="flex flex-col items-center space-y-4">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#0B4619] border-t-transparent"></div>
-          <p className="text-[#0B4619] font-medium">Loading...</p>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0B4619] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading dashboard...</p>
         </div>
       </div>
     )
   }
 
-  // Only render dashboard if authenticated
   if (!isAuthenticated) {
-    return null
+    return null // Will redirect to login
   }
 
   return <LMSDashboard />

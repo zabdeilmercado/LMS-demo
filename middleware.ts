@@ -2,30 +2,26 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
 export function middleware(request: NextRequest) {
-  // Public paths that don't require authentication
-  const publicPaths = ["/login", "/forgot-password", "/register"]
+  // Get the pathname of the request (e.g. /, /login, /dashboard)
+  const path = request.nextUrl.pathname
+
+  // Define public paths that don't require authentication
+  const publicPaths = ["/login", "/register", "/forgot-password"]
 
   // Check if the current path is public
-  const isPublicPath = publicPaths.some((path) => request.nextUrl.pathname.startsWith(path))
+  const isPublicPath = publicPaths.includes(path)
 
-  // Get authentication token from cookies (in a real app, you'd check for actual session)
-  const authToken = request.cookies.get("authToken")?.value
+  // Get the token from the request headers or cookies
+  const token = request.cookies.get("authToken")?.value || ""
 
-  // For demo purposes, we'll check localStorage on the client side
-  // In a real app, you'd validate the session server-side
-
-  // If trying to access a protected route without authentication
-  if (!isPublicPath && !authToken) {
-    // Redirect to login with a query parameter to show redirect message
-    const loginUrl = new URL("/login", request.url)
-    loginUrl.searchParams.set("redirected", "true")
-    return NextResponse.redirect(loginUrl)
+  // If the path is public and user has token, redirect to dashboard
+  if (isPublicPath && token) {
+    return NextResponse.redirect(new URL("/", request.nextUrl))
   }
 
-  // If authenticated user tries to access login page, redirect to dashboard
-  if (isPublicPath && authToken && request.nextUrl.pathname === "/login") {
-    const dashboardUrl = new URL("/", request.url)
-    return NextResponse.redirect(dashboardUrl)
+  // If the path is not public and no token, redirect to login
+  if (!isPublicPath && !token) {
+    return NextResponse.redirect(new URL("/login?redirected=true", request.nextUrl))
   }
 
   return NextResponse.next()
@@ -40,8 +36,8 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - images (public images)
+     * - public folder files
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|images).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|images|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.gif$|.*\\.svg$).*)",
   ],
 }
