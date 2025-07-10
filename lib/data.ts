@@ -2,8 +2,8 @@
 
 export const userData = {
   id: 1,
-  name: "Zabby",
-  email: "Zabby@example.com",
+  name: "Uriel Christian J.",
+  email: "uriel.christian@example.com",
   avatar: "/placeholder.svg",
   role: "Student",
   level: 20,
@@ -104,7 +104,7 @@ export const announcementData = [
   },
   {
     id: 2,
-    text: "CSU Piniliay is approaching",
+    text: "Urians, election season is approaching",
     course: "Computer Studies Life Skills",
     date: "2025-04-08T14:15:00",
     read: false,

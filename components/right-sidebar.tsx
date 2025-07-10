@@ -75,7 +75,7 @@ export function RightSidebar() {
     },
     {
       id: 2,
-      text: "CSU Piniliay is approaching",
+      text: "Urians, election season is approaching",
       course: "Computer Studies Life Skills",
       date: "Yesterday",
       isNew: true,

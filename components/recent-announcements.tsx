@@ -21,7 +21,7 @@ export function RecentAnnouncements() {
     },
     {
       id: 2,
-      title: "CSU Piniliay is Approaching",
+      title: "Urians, election season is approaching",
       course: "Computer Studies Life Skills",
       date: "Apr 8, 2025",
       read: false,

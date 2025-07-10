@@ -15,14 +15,27 @@ export default function HomePage() {
       const userSession = localStorage.getItem("userSession")
 
       if (!authToken || !userSession) {
-        // User is not authenticated, redirect to login
         router.push("/login?redirected=true")
         return
       }
 
-      // User is authenticated
-      setIsAuthenticated(true)
-      setIsLoading(false)
+      try {
+        const session = JSON.parse(userSession)
+        if (!session.id || !session.email) {
+          localStorage.removeItem("authToken")
+          localStorage.removeItem("userSession")
+          router.push("/login?redirected=true")
+          return
+        }
+
+        setIsAuthenticated(true)
+      } catch (error) {
+        localStorage.removeItem("authToken")
+        localStorage.removeItem("userSession")
+        router.push("/login?redirected=true")
+      } finally {
+        setIsLoading(false)
+      }
     }
 
     checkAuth()
@@ -30,7 +43,7 @@ export default function HomePage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0B4619] mx-auto mb-4"></div>
           <p className="text-gray-600">Loading dashboard...</p>
@@ -40,7 +53,7 @@ export default function HomePage() {
   }
 
   if (!isAuthenticated) {
-    return null // Will redirect to login
+    return null
   }
 
   return <LMSDashboard />

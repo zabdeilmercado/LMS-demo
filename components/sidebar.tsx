@@ -69,7 +69,7 @@ export function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
 
         {isExpanded && (
           <div className="mt-3 text-center">
-            <h3 className="font-medium">Zabbyy</h3>
+            <h3 className="font-medium">zabbyy</h3>
             <p className="text-xs text-white/70">Student</p>
             <div className="mt-2 px-4">
               <div className="flex items-center justify-between text-xs">

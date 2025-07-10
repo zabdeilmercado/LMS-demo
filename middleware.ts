@@ -2,32 +2,30 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
 export function middleware(request: NextRequest) {
-  // Get the pathname of the request (e.g. /, /login, /dashboard)
-  const path = request.nextUrl.pathname
+  const authToken = request.cookies.get("authToken")?.value
+  const { pathname } = request.nextUrl
 
-  // Define public paths that don't require authentication
-  const publicPaths = ["/login", "/register", "/forgot-password"]
+  // Public routes that don't require authentication
+  const publicRoutes = ["/login", "/register", "/forgot-password"]
 
-  // Check if the current path is public
-  const isPublicPath = publicPaths.includes(path)
+  // Check if the current path is a public route
+  const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route))
 
-  // Get the token from the request headers or cookies
-  const token = request.cookies.get("authToken")?.value || ""
-
-  // If the path is public and user has token, redirect to dashboard
-  if (isPublicPath && token) {
-    return NextResponse.redirect(new URL("/", request.nextUrl))
+  // If user is not authenticated and trying to access protected route
+  if (!authToken && !isPublicRoute) {
+    const loginUrl = new URL("/login", request.url)
+    loginUrl.searchParams.set("redirected", "true")
+    return NextResponse.redirect(loginUrl)
   }
 
-  // If the path is not public and no token, redirect to login
-  if (!isPublicPath && !token) {
-    return NextResponse.redirect(new URL("/login?redirected=true", request.nextUrl))
+  // If user is authenticated and trying to access login page, redirect to dashboard
+  if (authToken && pathname === "/login") {
+    return NextResponse.redirect(new URL("/", request.url))
   }
 
   return NextResponse.next()
 }
 
-// Configure which paths the middleware should run on
 export const config = {
   matcher: [
     /*
@@ -36,8 +34,8 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - public folder files
+     * - images (public images)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|images|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.gif$|.*\\.svg$).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|images).*)",
   ],
 }
